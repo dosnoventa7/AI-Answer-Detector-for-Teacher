@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101827">
+<title>DeteksiAI — Detektor Teks Berbasis AI</title>
+<style>
+:root{--bg:#0b1020;--panel:#111a2e;--panel2:#17233b;--text:#eef4ff;--muted:#9eacc8;--line:#293753;--cyan:#5eead4;--blue:#8b9cff;--yellow:#fbbf24}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 85% 0%,#172b50 0,transparent 38%),var(--bg);color:var(--text);font:16px/1.6 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif}
+a{color:inherit;text-decoration:none}.wrap{width:min(1120px,calc(100% - 40px));margin:auto}
+nav{height:82px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ffffff12}.brand{display:flex;align-items:center;gap:11px;font-weight:800;font-size:20px;letter-spacing:-.5px}.logo{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--cyan),#7c8cff);display:grid;place-items:center;color:#091321;font-weight:900}.navlinks{display:flex;gap:26px;color:var(--muted);font-size:14px}.navlinks a:hover{color:var(--text)}
+.hero{padding:76px 0 45px;text-align:center}.eyebrow{display:inline-flex;gap:8px;align-items:center;border:1px solid #5eead444;background:#5eead410;color:var(--cyan);padding:7px 13px;border-radius:99px;font-size:12px;font-weight:700;letter-spacing:.7px;text-transform:uppercase}.dot{width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 12px var(--cyan)}h1{font-size:clamp(38px,6vw,66px);line-height:1.07;letter-spacing:-2.8px;margin:23px 0 20px}h1 span{background:linear-gradient(90deg,var(--cyan),#a5b4fc);color:transparent;background-clip:text}.hero p{max-width:660px;margin:0 auto;color:var(--muted);font-size:18px}
+.tool{max-width:900px;margin:30px auto 0;background:linear-gradient(145deg,#17233a,#10182a);border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:0 28px 80px #0005;text-align:left}.tooltop{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}.tooltop strong{font-size:15px}.counter{font-size:12px;color:var(--muted)}textarea{width:100%;min-height:220px;resize:vertical;background:#0a1120;border:1px solid #2c3b59;border-radius:14px;color:var(--text);font:15px/1.7 inherit;padding:18px;outline:none}textarea:focus{border-color:var(--cyan);box-shadow:0 0 0 3px #5eead41a}textarea::placeholder{color:#6f7f9d}.actions{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:15px;flex-wrap:wrap}.hint{font-size:12px;color:var(--muted)}button{border:0;border-radius:12px;padding:13px 20px;font:inherit;font-weight:750;cursor:pointer;transition:transform .15s,opacity .15s}.primary{background:linear-gradient(100deg,var(--cyan),#a5b4fc);color:#091321}.primary:hover{transform:translateY(-1px)}.secondary{background:#202d47;color:var(--text);border:1px solid #344360}.results{display:none;margin-top:20px;border-top:1px solid var(--line);padding-top:22px}.resulthead{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}.resulthead h3{margin:0;font-size:19px}.pill{border:1px solid #fbbf2444;color:var(--yellow);background:#fbbf2410;border-radius:99px;padding:6px 10px;font-size:12px}.meterrow{display:flex;justify-content:space-between;color:var(--muted);font-size:13px;margin:20px 0 8px}.meter{height:10px;border-radius:99px;background:#27344d;overflow:hidden}.meterfill{height:100%;width:0;background:linear-gradient(90deg,var(--cyan),#a5b4fc);border-radius:99px;transition:width .6s}.resultcopy{color:var(--muted);font-size:14px;margin-top:16px}.signals{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}.signal{padding:13px;border-radius:12px;background:#0c1425;border:1px solid #25324b}.signal b{display:block;font-size:13px}.signal span{color:var(--muted);font-size:12px}.section{padding:65px 0}.section h2{text-align:center;font-size:32px;letter-spacing:-1px;margin:0 0 12px}.sub{text-align:center;color:var(--muted);max-width:610px;margin:0 auto 30px}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card{background:#111a2c;border:1px solid var(--line);border-radius:17px;padding:23px}.icon{width:42px;height:42px;border-radius:12px;background:#5eead416;color:var(--cyan);display:grid;place-items:center;font-size:20px;margin-bottom:16px}.card h3{margin:0 0 8px;font-size:17px}.card p{margin:0;color:var(--muted);font-size:14px}.notice{margin:10px auto 0;max-width:900px;background:#fbbf2410;border:1px solid #fbbf2430;border-radius:13px;padding:14px 17px;color:#e9d8a6;font-size:13px;text-align:left}.footer{border-top:1px solid #ffffff12;padding:25px 0;color:var(--muted);font-size:13px}.footerin{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+@media(max-width:700px){.navlinks{display:none}.hero{padding-top:54px}h1{letter-spacing:-1.7px}.tool{padding:14px}.cards,.signals{grid-template-columns:1fr}.section{padding:45px 0}.hero p{font-size:16px}.resulthead{align-items:flex-start}}
+</style>
+</head>
+<body>
+<header class="wrap">
+  <nav>
+    <a class="brand" href="#"><span class="logo">D</span> DeteksiAI</a>
+    <div class="navlinks"><a href="#detektor">Detektor</a><a href="#cara-kerja">Cara Kerja</a><a href="#tentang">Tentang</a></div>
+    <a href="#detektor"><button class="secondary">Coba sekarang ↗</button></a>
+  </nav>
+</header>
+<main>
+<section class="hero wrap">
+  <div class="eyebrow"><span class="dot"></span> Analisis teks berbantuan AI</div>
+  <h1>Kenali pola teks.<br><span>Pahami jawabannya.</span></h1>
+  <p>Alat bantu untuk meninjau karakteristik teks yang mungkin dihasilkan AI. Tempelkan teks dan dapatkan analisis awal dalam beberapa detik.</p>
+  <div class="tool" id="detektor">
+    <div class="tooltop"><strong>✦ Analisis teks</strong><span class="counter" id="counter">0 karakter</span></div>
+    <textarea id="textInput" maxlength="12000" placeholder="Tempel jawaban atau teks yang ingin kamu analisis di sini..."></textarea>
+    <div class="actions"><span class="hint">Maksimal 12.000 karakter · Teks diproses di browser ini</span><div style="display:flex;gap:9px"><button class="secondary" id="clearBtn">Hapus</button><button class="primary" id="analyzeBtn">Analisis teks →</button></div></div>
+    <div class="results" id="results" aria-live="polite">
+      <div class="resulthead"><h3>Hasil analisis awal</h3><span class="pill">Estimasi, bukan kepastian</span></div>
+      <div class="meterrow"><span>Indikator pola teks mirip AI</span><strong id="scoreLabel">—</strong></div>
+      <div class="meter"><div class="meterfill" id="meterFill"></div></div>
+      <p class="resultcopy" id="resultCopy"></p>
+      <div class="signals">
+        <div class="signal"><b id="s1">—</b><span>Keteraturan kalimat</span></div>
+        <div class="signal"><b id="s2">—</b><span>Variasi panjang kalimat</span></div>
+        <div class="signal"><b id="s3">—</b><span>Pola frasa umum</span></div>
+      </div>
+      <div class="notice">Penting: skor ini memakai heuristik sederhana di browser, bukan model pendeteksi AI terlatih. Teks manusia bisa tampak seperti AI dan sebaliknya. Jangan gunakan hasil ini sebagai satu-satunya dasar penilaian.</div>
+    </div>
+  </div>
+</section>
+<section class="section wrap" id="cara-kerja">
+  <h2>Analisis yang mudah dipahami</h2>
+  <p class="sub">Dirancang sebagai titik awal untuk mengevaluasi teks secara kritis, bukan memberi vonis otomatis.</p>
+  <div class="cards">
+    <article class="card"><div class="icon">⌁</div><h3>Periksa pola teks</h3><p>Meninjau keteraturan kalimat, variasi panjang kalimat, dan penggunaan frasa yang sering muncul.</p></article>
+    <article class="card"><div class="icon">◉</div><h3>Hasil transparan</h3><p>Menampilkan indikator yang digunakan agar hasil analisis lebih mudah dimengerti.</p></article>
+    <article class="card"><div class="icon">♧</div><h3>Privasi sederhana</h3><p>Contoh ini berjalan secara lokal di browser. Teks tidak dikirim ke server oleh halaman ini.</p></article>
+  </div>
+</section>
+<section class="section wrap" id="tentang" style="padding-top:0">
+  <h2>Gunakan dengan bijak</h2>
+  <p class="sub">Detektor AI tidak selalu akurat. Untuk tugas sekolah atau pekerjaan, periksa sumber, proses penulisan, dan pemahaman penulis—bukan hanya skor alat.</p>
+</section>
+</main>
+<footer class="footer"><div class="wrap footerin"><span>© 2026 DeteksiAI · Demo analisis teks</span><span>Dibuat untuk membantu evaluasi, bukan menggantikan penilaian manusia.</span></div></footer>
+<script>
+const input=document.getElementById('textInput'), counter=document.getElementById('counter'), results=document.getElementById('results');
+input.addEventListener('input',()=>counter.textContent=input.value.length.toLocaleString('id-ID')+' karakter');
+document.getElementById('clearBtn').addEventListener('click',()=>{input.value='';counter.textContent='0 karakter';results.style.display='none';input.focus()});
+document.getElementById('analyzeBtn').addEventListener('click',()=>{
+ const text=input.value.trim();
+ if(text.length<80){alert('Masukkan teks minimal 80 karakter agar indikator sederhana ini lebih bermakna.');return}
+ const sentences=text.split(/[.!?]+/).map(s=>s.trim()).filter(Boolean);
+ const words=text.toLowerCase().match(/[a-zA-ZÀ-ÿ0-9]+/g)||[];
+ const lengths=sentences.map(s=>(s.match(/[a-zA-ZÀ-ÿ0-9]+/g)||[]).length);
+ const avg=lengths.reduce((a,b)=>a+b,0)/(lengths.length||1);
+ const variance=lengths.reduce((a,b)=>a+Math.pow(b-avg,2),0)/(lengths.length||1);
+ const transition=['selain itu','oleh karena itu','dengan demikian','secara keseluruhan','penting untuk dicatat','di sisi lain','dapat disimpulkan','pertama','kedua','ketiga','in conclusion','furthermore','moreover'];
+ const found=transition.filter(p=>text.toLowerCase().includes(p)).length;
+ const connectors=found>=3?2:found>=1?1:0;
+ const uniform=(variance<35 && sentences.length>=3)?2:(variance<75 && sentences.length>=3)?1:0;
+ const formal=(words.length>100 && /\b(merupakan|memiliki|menunjukkan|berdasarkan|dapat|secara)\b/i.test(text))?1:0;
+ const score=Math.max(8,Math.min(92,Math.round(22+uniform*15+connectors*13+formal*8+(sentences.length>2?5:0))));
+ document.getElementById('scoreLabel').textContent=score+' / 100';
+ document.getElementById('meterFill').style.width=score+'%';
+ document.getElementById('resultCopy').textContent=score>=60?'Teks menunjukkan beberapa pola yang oleh heuristik sederhana ini dianggap lebih teratur atau formulaik. Ini bukan bukti bahwa teks dibuat AI.':'Teks menunjukkan sedikit atau beberapa pola yang diperiksa oleh heuristik sederhana ini. Hasil rendah juga tidak membuktikan bahwa teks ditulis manusia.';
+ document.getElementById('s1').textContent=uniform===2?'Cukup seragam':uniform===1?'Sedang':'Bervariasi';
+ document.getElementById('s2').textContent=variance<35?'Rendah':variance<75?'Sedang':'Tinggi';
+ document.getElementById('s3').textContent=found+' frasa terdeteksi';
+ results.style.display='block';results.scrollIntoView({behavior:'smooth',block:'nearest'});
+});
+</script>
+</body>
+</html>
